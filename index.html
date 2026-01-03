@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reall Income</title>
+  <style>
+    body {font-family: Arial; margin:0; padding:15px; background:#e8f5e9;}
+    h1 {text-align:center; color:#1b5e20;}
+    .card {background:white; padding:20px; border-radius:12px; margin:15px 0; box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+    .proof {padding:15px; border-bottom:1px solid #ddd; font-size:16px;}
+    .proof:last-child {border:none;}
+    p {text-align:center; color:#d32f2f; font-weight:bold;}
+  </style>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDlEX5OdC_XxT-CoE5o6dVL458qGDFgPhQ",
+      authDomain: "reall-income-398b8.firebaseapp.com",
+      databaseURL: "https://reall-income-398b8-default-rtdb.firebaseio.com",
+      projectId: "reall-income-398b8",
+      storageBucket: "reall-income-398b8.firebasestorage.app",
+      messagingSenderId: "576983833502",
+      appId: "1:576983833502:web:67bec05df0920e112dd48f",
+      measurementId: "G-97E3YJH86F"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Admin নোড থেকে সব প্রুফ নেওয়া হচ্ছে
+    const proofRef = db.ref("User");
+
+    proofRef.on("value", (snapshot) => {
+      let list = "";
+      snapshot.forEach((childSnapshot) => {
+        let d = childSnapshot.val();
+        // balance থাকলে প্রুফ হিসেবে দেখাবে
+        if (d.balance) {
+          list += `<div class="proof">
+            <b>${d.mobile || d.email || d.name || "User"}</b> - ${d.balance} Tk 
+            <small>(Paid)</small>
+          </div>`;
+        }
+      });
+      document.getElementById("proofs").innerHTML = list || "<p style='text-align:center;'>কোনো পেমেন্ট প্রুফ নেই</p>";
+    });
+  </script>
+</head>
+<body>
+  <div class="card">
+    <h1>Reall Income</h1>
+    <h2>সাম্প্রতিক পেমেন্ট প্রুফ</h2>
+    <div id="proofs">লোড হচ্ছে...</div>
+    <p>অফিশিয়াল অ্যাপ ডাউনলোড করে আর্ন করুন</p>
+  </div>
+</body>
+</html>
