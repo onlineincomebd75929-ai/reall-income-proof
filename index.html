@@ -60,6 +60,22 @@
 	<script> function openTask(){ if(window.Android){ Android.openTaskCheck(); } } </script>
 	<h1><a href="file:///android_asset/indexnr.html" target="_blank"> কাজের প্রমাণ দিন</a></h1>
 	<h1><a href="https://onlineincomebd75929-ai.github.io/taskcheck" target="_blank"> কাজের প্রমাণ দিন link</a></h1>
+
+	<button onclick="checkTask()">Task Check</button>
+
+<script>
+function checkTask() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("token")) {
+    Android.openTaskCheck();
+  } else {
+    alert("Visit proof invalid");
+  }
+}
+</script>
+
+
+	  
   </div>
 </body>
 </html>
